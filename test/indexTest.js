@@ -1,7 +1,9 @@
-const { document } = require('./helpers')
+const { document, dom } = require('./helpers')
 const { expect } = require('chai')
 
-// Sample test suite for JavaScript event handling
+// Import your main script so event listeners register in this simulated DOM environment
+require('../index.js')
+
 describe('Handling Events with JavaScript', () => {
   let changeColorButton
   let resetColorButton
@@ -30,21 +32,19 @@ describe('Handling Events with JavaScript', () => {
   })
 
   it('should display the key pressed by the user', () => {
-    // Simulate key press
+    // Simulate key press event
     const event = new dom.window.KeyboardEvent('keydown', { key: 'A' })
     document.dispatchEvent(event)
 
-    // Check if the keyPressDisplay has been updated
     expect(keyPressDisplay.textContent).to.include('A')
   })
 
   it('should display user input in real-time', () => {
-    // Simulate user input
+    // Simulate input event
     textInput.value = 'Hello'
-    const event = new dom.window.Event('input')
+    const event = new dom.window.Event('input', { bubbles: true })
     textInput.dispatchEvent(event)
 
-    // Check if the textInputDisplay has been updated
     expect(textInputDisplay.textContent).to.include('Hello')
   })
 })
